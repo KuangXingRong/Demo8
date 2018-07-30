@@ -1,0 +1,76 @@
+//
+//  PrefixHeader.pch
+//  Demo2
+//
+//  Created by apple on 2018/6/17.
+//  Copyright © 2018年 kxr. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Font&Scale
+#define SCREEN_SCALE [UIScreen mainScreen].scale
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+#define FONT(x) [UIFont systemFontOfSize:X(x)]
+#define WEAK(weakSelf,self)  __weak __typeof(&*self)weakSelf = self;
+
+#define X(x) (SCREEN_WIDTH / 375.0 * x)
+#define Y(y) (kDevice_Is_iPhoneX ? y : ((SCREEN_HEIGHT - 64) / (667.0 - 64) * y))
+
+#define kDevice_Is_iPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+
+//状态栏高度#
+#define kStatusBarHeight (CGFloat)(kDevice_Is_iPhoneX?(44):(20))
+// 状态栏和导航栏总高度
+#define kNavigationBarHeight  (44 + kStatusBarHeight)
+
+// TabBar高度
+#define kTabBarHeight (CGFloat)(kDevice_Is_iPhoneX?(49+34):(49))
+// 顶部安全区域远离高度
+#define kTopBarSafeHeight (CGFloat)(kDevice_Is_iPhoneX?(44):(0))
+// 底部安全区域远离高度
+#define kBottomSafeHeight (CGFloat)(kDevice_Is_iPhoneX?(34):(0))
+
+// iPhoneX的状态栏高度差值
+#define kTopBarDifHeight (CGFloat)(kDevice_Is_iPhoneX?(24):(0))
+
+// Masonry适配安全区域
+#if  __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_11_0
+#define SafeAreaTop self.view.mas_safeAreaLayoutGuideTop
+#define SafeAreaBottom self.view.mas_safeAreaLayoutGuideBottom
+#else
+#define SafeAreaTop self.mas_topLayoutGuideBottom
+#define SafeAreaBottom self.mas_bottomLayoutGuideTop
+#endif
+
+//#import "AFNetworking.h"
+#import "Masonry.h"
+#import "UIImageView+WebCache.h"
+#import <MJRefresh/MJRefresh.h>
+#import "UIScrollView+Refresh.h"
+#import "NSDate+Helper.h"
+#import "UIColor+Expanded.h"
+#import "UIImage+Common.h"
+#import "UILabel+Common.h"
+#import "UIView+Frame.h"
+#import "BaseViewController.h"
+#import "UIView+Common.h"
+#import "UIButton+Common.h"
+#import "UITableViewCell+Common.h"
+#import "CollectionViewCell+Common.h"
+#import "NSString+Common.h"
+// 打印日志
+#if DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr,"\n>>>>>>%s [Line:%d] \n%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define NSLog(FORMAT, ...) nil
+#endif
+
+#endif /* PrefixHeader_pch */
